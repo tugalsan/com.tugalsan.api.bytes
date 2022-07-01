@@ -1,5 +1,6 @@
 package com.tugalsan.api.bytes.client;
 
+import com.tugalsan.api.unsafe.client.*;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,18 +26,18 @@ public class TGS_ByteArrayUtils {
     }
 
     private static byte hex2Byte(CharSequence hexDigit) {
-        try {
+        return TGS_UnSafe.compile(() -> {
             var byteDigit0 = Character.digit(hexDigit.charAt(0), 16);
             var byteDigit1 = Character.digit(hexDigit.charAt(1), 16);
             return (byte) ((byteDigit0 << 4) + byteDigit1);
-        } catch (Exception e) {
-            throw new RuntimeException("hexDigit:" + hexDigit, e);
-        }
+        }, exception -> {
+            return TGS_UnSafe.catchMeIfUCanReturns(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + exception.getMessage());
+        });
     }
 
     public static byte[] hex2ByteArray(CharSequence hexDigits) {
         if (hexDigits.length() % 2 == 1) {
-            throw new RuntimeException("Invalid hexadecimal text supplied.");
+            TGS_UnSafe.catchMeIfUCan(TGS_ByteArrayUtils.class.getSimpleName(), "hex2ByteArray(CharSequence hexDigits)", "Invalid hexadecimal text supplied. -> hexDigits.length() % 2 == 1");
         }
         var bytes = new byte[hexDigits.length() / 2];
         for (int i = 0; i < hexDigits.length(); i += 2) {
@@ -47,11 +48,7 @@ public class TGS_ByteArrayUtils {
 
     public static int toInteger(byte[] byteArrray4) {
 //        return ByteBuffer.wrap(byteArrray4).getInt();//GWT does not like you
-        try {
-            return new BigInteger(byteArrray4).intValue();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return TGS_UnSafe.compile(() -> new BigInteger(byteArrray4).intValue());
     }
 
     public static byte[] toByteArray(int integer) {
@@ -60,27 +57,27 @@ public class TGS_ByteArrayUtils {
     }
 
     public static void transfer(byte[] source, OutputStream dest0) {
-        try ( var dest = dest0) {
-            dest.write(source);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        TGS_UnSafe.execute(() -> {
+            try ( var dest = dest0) {
+                dest.write(source);
+            }
+        });
     }
 
     public static byte[] toByteArray(InputStream is0) {
-        try ( var is = is0;  var baos = new ByteArrayOutputStream();) {
-            int reads = is.read();
-            while (reads != -1) {
-                baos.write(reads);
-                reads = is.read();
-            }
-            return baos.toByteArray();
+        return TGS_UnSafe.compile(() -> {
+            try ( var is = is0;  var baos = new ByteArrayOutputStream();) {
+                int reads = is.read();
+                while (reads != -1) {
+                    baos.write(reads);
+                    reads = is.read();
+                }
+                return baos.toByteArray();
 //            return is.readAllBytes();//GWT does not like it
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+            }
+        });
     }
-    
+
     public static byte[] toByteArray(CharSequence sourceText) {
         return toByteArray(sourceText, StandardCharsets.UTF_8);
     }
