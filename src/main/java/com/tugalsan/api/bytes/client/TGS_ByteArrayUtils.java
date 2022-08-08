@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-//import java.nio.ByteBuffer;GWT does not like you!
+//import java.nio.ByteBuffer;//GWT does not like u; check on 2.10 version again! or use https://github.com/Vertispan/gwt-nio
 import java.util.stream.IntStream;
 
 public class TGS_ByteArrayUtils {
@@ -47,12 +47,12 @@ public class TGS_ByteArrayUtils {
     }
 
     public static int toInteger(byte[] byteArrray4) {
-//        return ByteBuffer.wrap(byteArrray4).getInt();//GWT does not like you
+//        return ByteBuffer.wrap(byteArrray4).getInt();//GWT does not like u; check on 2.10 version again! or use https://github.com/Vertispan/gwt-nio
         return TGS_UnSafe.compile(() -> new BigInteger(byteArrray4).intValue());
     }
 
     public static byte[] toByteArray(int integer) {
-//        return ByteBuffer.allocate(4).putInt(integer).array();//GWT does not like you
+//        return ByteBuffer.allocate(4).putInt(integer).array();//GWT does not like u; check on 2.10 version again! or use https://github.com/Vertispan/gwt-nio
         return BigInteger.valueOf(integer).toByteArray();
     }
 
