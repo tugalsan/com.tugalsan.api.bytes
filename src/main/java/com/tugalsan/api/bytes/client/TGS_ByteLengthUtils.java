@@ -4,31 +4,31 @@ import java.nio.charset.StandardCharsets;
 
 public class TGS_ByteLengthUtils {
 
-    public int byteLengthInteger() {
+    public static int byteLengthInteger() {
         return 4;
     }
 
-    public int byteLengthFloat() {
+    public static int byteLengthFloat() {
         return 4;
     }
 
-    public int byteLengthLong() {
+    public static int byteLengthLong() {
         return 8;
     }
 
-    public int byteLengthDouble() {
+    public static int byteLengthDouble() {
         return 8;
     }
 
-    public int byteLengthStringNative(String value) {
+    public static int byteLengthStringNative(String value) {
         return value.length();
     }
 
-    public int byteLengthStringUTF8(String value) {
+    public static int byteLengthStringUTF8(String value) {
         return value.getBytes(StandardCharsets.UTF_8).length;
     }
 
-    public int byteLengthStringUTF16(String value) {
+    public static  int byteLengthStringUTF16(String value) {
         return value.getBytes().length;
     }
 }
