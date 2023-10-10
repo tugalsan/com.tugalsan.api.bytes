@@ -31,7 +31,7 @@ public class TGS_ByteArrayUtils {
             var byteDigit1 = Character.digit(hexDigit.charAt(1), 16);
             return (byte) ((byteDigit0 << 4) + byteDigit1);
         }, exception -> {
-            return TGS_UnSafe.thrwReturns(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + exception.getMessage());
+            return TGS_UnSafe.thrwReturns(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + exception.getClass().getSimpleName() + ":" + exception.getMessage());
         });
     }
 
@@ -58,7 +58,7 @@ public class TGS_ByteArrayUtils {
 
     public static void transfer(byte[] source, OutputStream dest0) {
         TGS_UnSafe.run(() -> {
-            try ( var dest = dest0) {
+            try (var dest = dest0) {
                 dest.write(source);
             }
         });
@@ -66,7 +66,7 @@ public class TGS_ByteArrayUtils {
 
     public static byte[] toByteArray(InputStream is0) {
         return TGS_UnSafe.call(() -> {
-            try ( var is = is0;  var baos = new ByteArrayOutputStream();) {
+            try (var is = is0; var baos = new ByteArrayOutputStream();) {
                 int reads = is.read();
                 while (reads != -1) {
                     baos.write(reads);
