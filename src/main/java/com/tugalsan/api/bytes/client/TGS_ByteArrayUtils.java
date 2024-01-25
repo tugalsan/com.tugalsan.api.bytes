@@ -40,7 +40,7 @@ public class TGS_ByteArrayUtils {
             TGS_UnSafe.thrw(TGS_ByteArrayUtils.class.getSimpleName(), "hex2ByteArray(CharSequence hexDigits)", "Invalid hexadecimal text supplied. -> hexDigits.length() % 2 == 1");
         }
         var bytes = new byte[hexDigits.length() / 2];
-        for (int i = 0; i < hexDigits.length(); i += 2) {
+        for (var i = 0; i < hexDigits.length(); i += 2) {
             bytes[i / 2] = hex2Byte(hexDigits.subSequence(i, i + 2));
         }
         return bytes;
@@ -67,7 +67,8 @@ public class TGS_ByteArrayUtils {
     public static byte[] toByteArray(InputStream is0) {
         return TGS_UnSafe.call(() -> {
             try (var is = is0; var baos = new ByteArrayOutputStream();) {
-                int reads = is.read();
+//                is.transferTo(baos);//GWT does not like it
+                var reads = is.read();
                 while (reads != -1) {
                     baos.write(reads);
                     reads = is.read();
