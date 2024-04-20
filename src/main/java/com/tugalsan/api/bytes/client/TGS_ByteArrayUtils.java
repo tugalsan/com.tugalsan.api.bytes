@@ -31,7 +31,7 @@ public class TGS_ByteArrayUtils {
             var byteDigit1 = Character.digit(hexDigit.charAt(1), 16);
             return (byte) ((byteDigit0 << 4) + byteDigit1);
         }, exception -> {
-            return TGS_UnSafe.thrwReturns(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + exception.getClass().getSimpleName() + ":" + exception.getMessage());
+            return TGS_UnSafe.thrw(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + exception.getClass().getSimpleName() + ":" + exception.getMessage());
         });
     }
 
