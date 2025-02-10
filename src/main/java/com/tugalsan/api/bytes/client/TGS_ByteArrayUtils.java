@@ -1,6 +1,8 @@
 package com.tugalsan.api.bytes.client;
 
-import com.tugalsan.api.unsafe.client.*;
+
+import com.tugalsan.api.function.client.maythrow.checkedexceptions.TGS_FuncMTCEUtils;
+import com.tugalsan.api.function.client.maythrow.uncheckedexceptions.TGS_FuncMTUCEUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,18 +28,18 @@ public class TGS_ByteArrayUtils {
     }
 
     private static byte hex2Byte(CharSequence hexDigit) {
-        return TGS_UnSafe.call(() -> {
+        return TGS_FuncMTCEUtils.call(() -> {
             var byteDigit0 = Character.digit(hexDigit.charAt(0), 16);
             var byteDigit1 = Character.digit(hexDigit.charAt(1), 16);
             return (byte) ((byteDigit0 << 4) + byteDigit1);
         }, exception -> {
-            return TGS_UnSafe.thrw(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + exception.getClass().getSimpleName() + ":" + exception.getMessage());
+            return TGS_FuncMTUCEUtils.thrw(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + exception.getClass().getSimpleName() + ":" + exception.getMessage());
         });
     }
 
     public static byte[] hex2ByteArray(CharSequence hexDigits) {
         if (hexDigits.length() % 2 == 1) {
-            TGS_UnSafe.thrw(TGS_ByteArrayUtils.class.getSimpleName(), "hex2ByteArray(CharSequence hexDigits)", "Invalid hexadecimal text supplied. -> hexDigits.length() % 2 == 1");
+            TGS_FuncMTUCEUtils.thrw(TGS_ByteArrayUtils.class.getSimpleName(), "hex2ByteArray(CharSequence hexDigits)", "Invalid hexadecimal text supplied. -> hexDigits.length() % 2 == 1");
         }
         var bytes = new byte[hexDigits.length() / 2];
         for (var i = 0; i < hexDigits.length(); i += 2) {
@@ -48,7 +50,7 @@ public class TGS_ByteArrayUtils {
 
     public static int toInteger(byte[] byteArrray4) {
 //        return ByteBuffer.wrap(byteArrray4).getInt();//GWT does not like u; check on 2.10 version again! or use https://github.com/Vertispan/gwt-nio
-        return TGS_UnSafe.call(() -> new BigInteger(byteArrray4).intValue());
+        return TGS_FuncMTCEUtils.call(() -> new BigInteger(byteArrray4).intValue());
     }
 
     public static byte[] toByteArray(int integer) {
@@ -57,7 +59,7 @@ public class TGS_ByteArrayUtils {
     }
 
     public static void transfer(byte[] source, OutputStream dest0) {
-        TGS_UnSafe.run(() -> {
+        TGS_FuncMTCEUtils.run(() -> {
             try (var dest = dest0) {
                 dest.write(source);
             }
@@ -65,7 +67,7 @@ public class TGS_ByteArrayUtils {
     }
 
     public static byte[] toByteArray(InputStream is0) {
-        return TGS_UnSafe.call(() -> {
+        return TGS_FuncMTCEUtils.call(() -> {
             try (var is = is0; var baos = new ByteArrayOutputStream();) {
 //                is.transferTo(baos);//GWT does not like it
                 var reads = is.read();
