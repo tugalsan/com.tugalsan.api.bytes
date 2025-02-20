@@ -13,6 +13,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.IntStream;
 
 public class TGS_ByteArrayUtils {
+    
+    private TGS_ByteArrayUtils(){
+        
+    }
 
     private static String hex2Text(byte byteDigit) {
         var hexDigits = new char[2];
@@ -22,7 +26,7 @@ public class TGS_ByteArrayUtils {
     }
 
     public static String hex2Text(byte[] byteDigits) {
-        var sb = new StringBuffer();
+        var sb = new StringBuilder();
         IntStream.range(0, byteDigits.length).forEachOrdered(i -> sb.append(hex2Text(byteDigits[i])));
         return sb.toString();
     }
@@ -32,8 +36,8 @@ public class TGS_ByteArrayUtils {
             var byteDigit0 = Character.digit(hexDigit.charAt(0), 16);
             var byteDigit1 = Character.digit(hexDigit.charAt(1), 16);
             return (byte) ((byteDigit0 << 4) + byteDigit1);
-        }, exception -> {
-            return TGS_FuncMTUCEUtils.thrw(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + exception.getClass().getSimpleName() + ":" + exception.getMessage());
+        }, e -> {
+            return TGS_FuncMTUCEUtils.thrw(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + e.getClass().getSimpleName() + ":" + e.getMessage());
         });
     }
 

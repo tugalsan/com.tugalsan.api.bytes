@@ -3,6 +3,10 @@ package com.tugalsan.api.bytes.client;
 import java.nio.charset.StandardCharsets;
 
 public class TGS_ByteLengthUtils {
+    
+    private TGS_ByteLengthUtils(){
+        
+    }
 
     public static int typeInteger() {
         return 4;
