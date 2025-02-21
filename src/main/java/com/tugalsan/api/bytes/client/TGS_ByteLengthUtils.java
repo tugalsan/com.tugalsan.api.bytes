@@ -2,7 +2,7 @@ package com.tugalsan.api.bytes.client;
 
 import java.nio.charset.StandardCharsets;
 
-public class TGS_ByteLengthUtils {
+final public class TGS_ByteLengthUtils {
     
     private TGS_ByteLengthUtils(){
         

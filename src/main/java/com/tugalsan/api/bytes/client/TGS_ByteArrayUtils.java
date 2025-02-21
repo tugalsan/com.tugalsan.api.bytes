@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 //import java.nio.ByteBuffer;//GWT does not like u; check on 2.10 version again! or use https://github.com/Vertispan/gwt-nio
 import java.util.stream.IntStream;
 
-public class TGS_ByteArrayUtils {
+final public class TGS_ByteArrayUtils {
     
     private TGS_ByteArrayUtils(){
         
@@ -72,7 +72,7 @@ public class TGS_ByteArrayUtils {
 
     public static byte[] toByteArray(InputStream is0) {
         return TGS_FuncMTCEUtils.call(() -> {
-            try (var is = is0; var baos = new ByteArrayOutputStream();) {
+            try (var is = is0; var baos = new ByteArrayOutputStream()) {
 //                is.transferTo(baos);//GWT does not like it
                 var reads = is.read();
                 while (reads != -1) {
