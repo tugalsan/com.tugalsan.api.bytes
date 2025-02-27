@@ -6,7 +6,6 @@
     <version>1.0-SNAPSHOT</version>
   
     <properties>
-        <maven.compiler.release>23</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
   
@@ -54,7 +53,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <release>23</release> 
+                    <release>24</release><!--prop.jdk-->
                     <!--  <enablePreview>true</enablePreview>
                     <compilerArgs>
                        <arg>- -add-modules</arg>
