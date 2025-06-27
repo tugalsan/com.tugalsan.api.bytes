@@ -1,6 +1,5 @@
 package com.tugalsan.api.bytes.client;
 
-
 import com.tugalsan.api.function.client.maythrowexceptions.checked.TGS_FuncMTCUtils;
 import com.tugalsan.api.function.client.maythrowexceptions.unchecked.TGS_FuncMTUUtils;
 import java.io.ByteArrayOutputStream;
@@ -13,9 +12,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.IntStream;
 
 final public class TGS_ByteArrayUtils {
-    
-    private TGS_ByteArrayUtils(){
-        
+
+    private TGS_ByteArrayUtils() {
+
     }
 
     private static String hex2Text(byte byteDigit) {
@@ -36,9 +35,10 @@ final public class TGS_ByteArrayUtils {
             var byteDigit0 = Character.digit(hexDigit.charAt(0), 16);
             var byteDigit1 = Character.digit(hexDigit.charAt(1), 16);
             return (byte) ((byteDigit0 << 4) + byteDigit1);
-        }, e -> {
-            return TGS_FuncMTUUtils.thrw(TGS_ByteArrayUtils.class.getSimpleName(), "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + e.getClass().getSimpleName() + ":" + e.getMessage());
-        });
+        }, e -> TGS_FuncMTUUtils.thrw(
+                TGS_ByteArrayUtils.class.getSimpleName(),
+                "hex2Byte(CharSequence hexDigit)", "hexDigit:" + hexDigit + ", e:" + e.getClass().getSimpleName() + ":" + e.getMessage()
+        ));
     }
 
     public static byte[] hex2ByteArray(CharSequence hexDigits) {
